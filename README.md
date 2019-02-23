@@ -1,4 +1,4 @@
-# stan100knocks
+# Stan100knocks
 
 ・Stanの公式マニュアル  
 ・様々な文献/ブログの改良  
