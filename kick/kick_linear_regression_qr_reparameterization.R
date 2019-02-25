@@ -11,7 +11,7 @@ dataset <- dataset %>% mutate_each_(funs(scale),
 
 
 # Kick Stan ---------------------------------------------------------------
-# https://mc-stan.org/docs/2_18/stan-users-guide/linear-regression.html
+# https://mc-stan.org/docs/2_18/stan-users-guide/QR-reparameterization-section.html
 N <- nrow(dataset)
 K <- ncol(dataset) - 1
 
@@ -20,7 +20,7 @@ data <- list(N = N,
              x = as.matrix(dataset %>% select(-SalePrice)),
              y = dataset$SalePrice)
 
-fit <- stan(file = "model/linear_regression.stan",
+fit <- stan(file = "model/linear_regression_qr_reparameterization.stan",
             data = data,
             seed = 1234)
 
