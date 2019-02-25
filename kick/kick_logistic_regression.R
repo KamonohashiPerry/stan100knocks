@@ -8,21 +8,20 @@ dataset <- read_csv(file = "dataset/housing_prices_dataset_train.csv")
 dataset <- dataset %>% select(SalePrice, YearBuilt, LotArea, BsmtFullBath)
 dataset <- dataset %>% mutate_each_(funs(scale),
                                     vars=c("YearBuilt", "LotArea", "BsmtFullBath"))
+dataset <- dataset %>% mutate(high_price_flag = if_else(SalePrice > 200000, 1, 0))
 
 
 # Kick Stan ---------------------------------------------------------------
-# https://mc-stan.org/docs/2_18/stan-users-guide/robust-noise-models.html
+# https://mc-stan.org/docs/2_18/stan-users-guide/logistic-probit-regression-section.html
 N <- nrow(dataset)
-K <- ncol(dataset) - 1
-nu <- N - K
+K <- ncol(dataset) - 2
 
 data <- list(N = N,
              K = K,
-             nu = nu,
-             x = as.matrix(dataset %>% select(-SalePrice)),
-             y = dataset$SalePrice)
+             x = as.matrix(dataset %>% select(-SalePrice,-high_price_flag)),
+             y = dataset$high_price_flag)
 
-fit <- stan(file = "model/linear_regression_robust_noise_model.stan",
+fit <- stan(file = "model/logistic_regression.stan",
             data = data,
             seed = 1234)
 
@@ -58,4 +57,3 @@ p <- p + geom_pointrange(data=d_qua, aes(x=X, y=p50, ymin=p2.5, ymax=p97.5), siz
 p <- p + labs(x='parameter', y='value')
 p <- p + scale_y_continuous(breaks=seq(from=-2, to=6, by=2))
 p
-
