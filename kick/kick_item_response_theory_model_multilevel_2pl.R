@@ -71,8 +71,7 @@ stan_data <- list(K = K,
                   jj = long$id,
                   y = long$response)
 
-
-fit <- stan(file = "model/item_response_theory_model_rasch.stan",
+fit <- stan(file = "model/item_response_theory_model_multilevel_2pl.stan",
             data = stan_data,
             iter = 1000,
             chains = 4,
@@ -85,7 +84,6 @@ summary(fit)
 traceplot(fit)
 
 launch_shinystan(fit)
-
 
 
 # Visualization -----------------------------------------------------------
@@ -108,5 +106,4 @@ ggdf <- ggdf %>%
   ggplot(aes(x=theta))
 
 ggdf + geom_line(aes(y=value,color=var))
-
 
