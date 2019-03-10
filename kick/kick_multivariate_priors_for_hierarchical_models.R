@@ -17,12 +17,13 @@ hhid_selected <- margarine$choicePrice %>%
 
 # Kick Stan ---------------------------------------------------------------
 # https://mc-stan.org/docs/2_18/stan-users-guide/multivariate-hierarchical-priors-section.html
+# https://oku.edu.mie-u.ac.jp/~okumura/rstan/sec74.html
 
 #家計ごとに関する属性データの抽出
 demos.selected <- margarine$demos %>% filter(hhid %in% hhid_selected$hhid)
 demos.selected <- demos.selected %>% mutate(family_group = if_else(Fam_Size < 2, 1,
-                                                                   if_else(Fam_Size < 5, 2,3)))
-                                                                           #if_else(Fam_Size < 5,3,4))))
+                                                                   if_else(Fam_Size < 4, 2,#,3)))
+                                                                           if_else(Fam_Size < 5,3,4))))
 
 hhid_selected <- hhid_selected %>% left_join(demos.selected %>% select(hhid, family_group), by = "hhid")
 
@@ -48,7 +49,9 @@ fit <- stan(file = "model/multivariate_priors_for_hierarchical_models.stan",
             data = stan_data,
             iter = 1000,
             chains = 4,
-            seed = 1234)
+            seed = 1234,
+            control = list(max_treedepth = 15,adapt_delta=0.99))
+
 
 # Diagnose ----------------------------------------------------------------
 
@@ -83,3 +86,4 @@ p <- p + geom_pointrange(data=d_qua, aes(x=X, y=p50, ymin=p2.5, ymax=p97.5), siz
 p <- p + labs(x='parameter', y='value')
 p <- p + scale_y_continuous(breaks=seq(from=-2, to=6, by=2))
 p
+

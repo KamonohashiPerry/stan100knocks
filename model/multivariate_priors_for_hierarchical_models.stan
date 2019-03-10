@@ -16,9 +16,9 @@ parameters {
   real<lower=0> sigma;         // prediction error scale
 }
 model {
-  tau ~ cauchy(0, 2.5);
-  Omega ~ lkj_corr(2);
-  to_vector(gamma) ~ normal(0, 5);
+  tau ~ cauchy(0, 2.5); // 2.5
+  Omega ~ lkj_corr(2); # 2
+  to_vector(gamma) ~ normal(0, 5); # 0:5
   {
     row_vector[K] u_gamma[J];
     for (j in 1:J)
