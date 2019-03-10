@@ -10,10 +10,10 @@ data("margarine")
 
 #1,2,3,4,5,7の商品に関してデータを抽出し、家計IDごとにカウントし、5件以上買ったかどうかのフラグを作成する。
 hhid_selected <- margarine$choicePrice %>% 
-                        filter(choice %in% c(1,2,3,4,5,7)) %>% 
-                        group_by(hhid) %>% 
-                        summarise(purc_cnt = n()) %>% 
-                        mutate(outcomes=if_else(purc_cnt>=5, 1, 0))
+  filter(choice %in% c(1,2,3,4,5,7)) %>% 
+  group_by(hhid) %>% 
+  summarise(purc_cnt = n()) %>% 
+  mutate(outcomes=if_else(purc_cnt>=5, 1, 0))
 
 # Kick Stan ---------------------------------------------------------------
 # https://mc-stan.org/docs/2_18/stan-users-guide/multivariate-hierarchical-priors-section.html
@@ -43,9 +43,9 @@ stan_data <- list(N = nrow(hhid_selected), # // num individuals
                   x = X, # // individual predictors
                   u = U, # // group predictors
                   y = hhid_selected$outcomes # // outcomes
-                  )
+)
 
-fit <- stan(file = "model/multivariate_priors_for_hierarchical_models.stan",
+fit <- stan(file = "model/multivariate_priors_for_hierarchical_models_optimized.stan",
             data = stan_data,
             iter = 2000,
             chains = 4,
