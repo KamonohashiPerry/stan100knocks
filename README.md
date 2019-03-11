@@ -8,5 +8,7 @@ kickにはstanを実行するためのRファイルを、datasetには実行す�
 
 
 ## 参考情報
-https://mc-stan.org/docs/2_18/stan-users-guide/index.html
-https://jrnold.github.io/ssmodels-in-stan/
+https://mc-stan.org/docs/2_18/stan-users-guide/index.html  
+https://jrnold.github.io/ssmodels-in-stan/  
+https://github.com/stan-dev/example-models/tree/master/BPA  
+
