@@ -28,7 +28,7 @@ stan_data <- list(N = nrow(dataset_raw), # // num row
                   x_new = as.matrix(dataset_new %>% select(-height)) # new predictors
 )
 
-fit <- stan(file = "model/prediction_linear_model.stan",
+fit <- stan(file = "model/prediction_linear_model_generated_quantities.stan",
             data = stan_data,
             iter = 2000,
             chains = 4,
