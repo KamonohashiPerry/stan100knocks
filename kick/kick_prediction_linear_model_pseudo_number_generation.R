@@ -18,7 +18,7 @@ dataset_new <- dataset[-n,]
 
 
 # Kick Stan model ---------------------------------------------------------
-# https://mc-stan.org/docs/2_18/stan-users-guide/prediction-forecasting-and-backcasting.html
+# https://mc-stan.org/docs/2_18/stan-users-guide/applications-of-pseudorandom-number-generation.html
 
 stan_data <- list(N = nrow(dataset_raw), # // num row
                   x = as.numeric(dataset_raw$age), # // predictors
