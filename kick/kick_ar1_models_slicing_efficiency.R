@@ -10,7 +10,7 @@ options(mc.cores = parallel::detectCores())
 # Data Import -------------------------------------------------------------
 
 dataset <- gtrends(keyword = "熱海温泉",
-                time = "2009-01-01 2019-03-01")
+                   time = "2009-01-01 2019-03-01")
 class(dataset)
 
 
@@ -21,7 +21,7 @@ stan_data <- list(N = nrow(dataset$interest_over_time), # // num row
                   y = dataset$interest_over_time$hits
 )
 
-fit <- stan(file = "model/ar1_models.stan",
+fit <- stan(file = "model/ar1_models_slicing_efficiency.stan",
             data = stan_data,
             iter = 2000,
             chains = 4,

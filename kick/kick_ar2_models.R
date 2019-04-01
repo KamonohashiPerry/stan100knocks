@@ -10,7 +10,7 @@ options(mc.cores = parallel::detectCores())
 # Data Import -------------------------------------------------------------
 
 dataset <- gtrends(keyword = "熱海温泉",
-                time = "2009-01-01 2019-03-01")
+                   time = "2009-01-01 2019-03-01")
 class(dataset)
 
 
@@ -21,7 +21,7 @@ stan_data <- list(N = nrow(dataset$interest_over_time), # // num row
                   y = dataset$interest_over_time$hits
 )
 
-fit <- stan(file = "model/ar1_models.stan",
+fit <- stan(file = "model/ar2_models.stan",
             data = stan_data,
             iter = 2000,
             chains = 4,
@@ -44,8 +44,8 @@ source('kick/common.R')
 ms <- rstan::extract(fit)
 N_mcmc <- length(ms$lp__)
 
-param_names <- c('mcmc', paste0('alpha'), paste0('beta'), paste0('sigma'))
-d_est <- data.frame(1:N_mcmc, as.numeric(ms$alpha), as.numeric(ms$beta), as.numeric(ms$sigma))
+param_names <- c('mcmc', paste0('alpha'), paste0('beta'), paste0('gamma'), paste0('sigma'))
+d_est <- data.frame(1:N_mcmc, as.numeric(ms$alpha), as.numeric(ms$beta), as.numeric(ms$gamma), as.numeric(ms$sigma))
 colnames(d_est) <- param_names
 d_qua <- data.frame.quantile.mcmc(x=param_names[-1], y_mcmc=d_est[,-1])
 d_melt <- reshape2::melt(d_est, id.vars=c('mcmc'), variable.name='X', value.name="value")
