@@ -43,8 +43,8 @@ source('kick/common.R')
 ms <- rstan::extract(fit)
 N_mcmc <- length(ms$lp__)
 
-param_names <- c('mcmc', paste0('mu'), paste0('alpha'), paste0('alpha1'))
-d_est <- data.frame(1:N_mcmc, as.numeric(ms$mu), as.numeric(ms$alpha), as.numeric(ms$alpha1))
+param_names <- c('mcmc', paste0('mu'), paste0('alpha0'), paste0('alpha1'))
+d_est <- data.frame(1:N_mcmc, as.numeric(ms$mu), as.numeric(ms$alpha0), as.numeric(ms$alpha1))
 colnames(d_est) <- param_names
 d_qua <- data.frame.quantile.mcmc(x=param_names[-1], y_mcmc=d_est[,-1])
 d_melt <- reshape2::melt(d_est, id.vars=c('mcmc'), variable.name='X', value.name="value")
