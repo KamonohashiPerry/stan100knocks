@@ -11,22 +11,25 @@ options(mc.cores = parallel::detectCores())
 # https://www.mof.go.jp/jgbs/reference/interest_rate/index.htm
 
 dataset <- read_csv(file = "dataset/bond_return_rate.csv")
+dataset <- dataset[9000:nrow(dataset),]
 summary(dataset)
 
 
 # Kick Stan model ---------------------------------------------------------
-# https://mc-stan.org/docs/2_18/stan-users-guide/autoregressive-section.html
+# https://mc-stan.org/docs/2_18/stan-users-guide/modeling-temporal-heteroscedasticity.html
 
 stan_data <- list(T = nrow(dataset), # // num row
-                  r = dataset$year5
+                  r = dataset$year5,
+                  sigma1 = 1 # initial value of volatility
 )
 
-fit <- stan(file = "model/arch1_model.stan",
+fit <- stan(file = "model/garch_model.stan",
             data = stan_data,
             iter = 2000,
             chains = 4,
             seed = 1234,
-            control = list(max_treedepth = 15,adapt_delta=0.99))
+            control = list(max_treedepth = 15,adapt_delta=0.99)
+            )
 
 
 # Diagnose ----------------------------------------------------------------
@@ -43,8 +46,9 @@ source('kick/common.R')
 ms <- rstan::extract(fit)
 N_mcmc <- length(ms$lp__)
 
-param_names <- c('mcmc', paste0('mu'), paste0('alpha0'), paste0('alpha1'))
-d_est <- data.frame(1:N_mcmc, as.numeric(ms$mu), as.numeric(ms$alpha0), as.numeric(ms$alpha1))
+param_names <- c('mcmc', paste0('mu'), paste0('alpha0'), paste0('alpha1'), paste0('beta1'))
+d_est <- data.frame(1:N_mcmc, as.numeric(ms$mu), as.numeric(ms$alpha0),
+                              as.numeric(ms$alpha1), as.numeric(ms$beta1))
 colnames(d_est) <- param_names
 d_qua <- data.frame.quantile.mcmc(x=param_names[-1], y_mcmc=d_est[,-1])
 d_melt <- reshape2::melt(d_est, id.vars=c('mcmc'), variable.name='X', value.name="value")
