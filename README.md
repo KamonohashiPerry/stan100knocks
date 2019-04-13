@@ -14,5 +14,7 @@ https://github.com/stan-dev/example-models/tree/master/BPA
 https://github.com/sinhrks/stan-statespace  
 http://statmodeling.hatenablog.com/entry/state-space-model-many-terms  
 https://logics-of-blue.com/multivariate-time-series-with-stan/  
+### ABテストについて
 https://jrnold.github.io/presentation-2018-11-05/abtest.html
-
+### 隠れマルコフについて
+https://zenodo.org/record/1284341#.XLGq-uv7RTY
