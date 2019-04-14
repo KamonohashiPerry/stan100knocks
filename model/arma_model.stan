@@ -5,7 +5,7 @@ data {
 parameters {
   real mu;                   // mean coeff
   real phi;                  // autoregression coeff
-  real theta;                // moving avg coeff
+  real<lower = -1, upper = 1> theta; // moving avg coeff
   real<lower=0> sigma;       // noise scale
 }
 model {
