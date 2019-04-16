@@ -6,3 +6,4 @@ https://discourse.mc-stan.org/t/initialization-between-2-2-failed-after-100-atte
 ## モデリングの注意点
 
 + 安易にパラメータの取りうる範囲に関して制約を掛けるのは避けたほうが良い。
++ 最初にモデルを作り、登場するデータやパラメータを作っていく。
