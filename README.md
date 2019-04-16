@@ -15,7 +15,12 @@ https://github.com/stan-dev/example-models/tree/master/BPA
 https://github.com/sinhrks/stan-statespace  
 http://statmodeling.hatenablog.com/entry/state-space-model-many-terms  
 https://logics-of-blue.com/multivariate-time-series-with-stan/  
-https://jrnold.github.io/bugs-examples-in-stan/index.html
+https://jrnold.github.io/bugs-examples-in-stan/index.html  
+
+### 価格弾力性
+https://github.com/stan-dev/stancon_talks/blob/master/2018-helsinki/Contributed-Talks/braylan/Self-tuning_Holidays-presented.ipynb  
+### 収益最適化
+https://www.smartly.io/blog/tutorial-how-we-productized-bayesian-revenue-estimation-with-stan
 
 ### ABテストについて
 https://jrnold.github.io/presentation-2018-11-05/abtest.html
