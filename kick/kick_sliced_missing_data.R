@@ -25,6 +25,7 @@ ii_obs <- which(y_index > 0)
 ii_mis <- which(y_index == 0)
 
 # Kick Stan model ---------------------------------------------------------
+# https://mc-stan.org/docs/2_18/stan-users-guide/sliced-missing-data.html
 
 stan_data <- list(N_obs = length(y_obs),
                   N_mis = length(y_mis),
