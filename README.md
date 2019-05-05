@@ -26,3 +26,9 @@ https://www.smartly.io/blog/tutorial-how-we-productized-bayesian-revenue-estimat
 https://jrnold.github.io/presentation-2018-11-05/abtest.html
 ### 隠れマルコフについて
 https://zenodo.org/record/1284341#.XLGq-uv7RTY
+
+### 生存時間分析について
+https://qiita.com/fred55/items/52a3ce36906805645e05  
+http://ajhjhaf.hatenablog.com/entry/2017/08/05/194939  
+http://statmodeling.hatenablog.com/entry/survival-analysis-hazard-car-model  
+https://www.bananarian.net/entry/2019/02/17/090000
