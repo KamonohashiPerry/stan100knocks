@@ -55,7 +55,8 @@ transformed parameters {
   
 model { 
    yobs ~ weibull(alpha, exp(-(mu + Xobs_bg * beta_bg)/alpha)); 
-   target += weibull_lccdf(ycen | alpha, exp(-(mu + Xcen_bg * beta_bg)/alpha)); 
+   target += weibull_lccdf(ycen | alpha,
+                            exp(-(mu + Xcen_bg * beta_bg)/alpha)); 
   
    beta_bg_raw ~ normal(0.0, 1.0); 
    alpha_raw ~ normal(0.0, 1.0); 
@@ -70,12 +71,16 @@ generated quantities {
   
      for (i in 1:Nobs) { 
          lp[i] = mu + Xobs_bg[i,] * beta_bg; 
-         yhat_uncens[i] = weibull_rng(alpha, exp(-(mu + Xobs_bg[i,] * beta_bg)/alpha)); 
-         log_lik[i] = weibull_lpdf(yobs[i] | alpha, exp(-(mu + Xobs_bg[i,] * beta_bg)/alpha)); 
+         yhat_uncens[i] = weibull_rng(alpha,
+                                      exp(-(mu + Xobs_bg[i,] * beta_bg)/alpha)); 
+         log_lik[i] = weibull_lpdf(yobs[i] | alpha,
+                                    exp(-(mu + Xobs_bg[i,] * beta_bg)/alpha)); 
      } 
      for (i in 1:Ncen) { 
          lp[Nobs + i] = mu + Xcen_bg[i,] * beta_bg; 
-         yhat_uncens[Nobs + i] = weibull_rng(alpha, exp(-(mu + Xcen_bg[i,] * beta_bg)/alpha)); 
-         log_lik[Nobs + i] = weibull_lccdf(ycen[i] | alpha, exp(-(mu + Xcen_bg[i,] * beta_bg)/alpha)); 
+         yhat_uncens[Nobs + i] = weibull_rng(alpha,
+                                              exp(-(mu + Xcen_bg[i,] * beta_bg)/alpha)); 
+         log_lik[Nobs + i] = weibull_lccdf(ycen[i] | alpha,
+                                              exp(-(mu + Xcen_bg[i,] * beta_bg)/alpha)); 
      } 
  }
