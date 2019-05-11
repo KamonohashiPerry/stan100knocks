@@ -61,3 +61,4 @@ Rから受け取る定数の宣言を行う。
 
 ## 参考情報
 + Stan — 高速MCMCでパラメータ推定( https://heavywatal.github.io/rstats/stan.html )
++ Stan超初心者入門( https://www.slideshare.net/simizu706/stan-62042940 )
