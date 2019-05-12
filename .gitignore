@@ -6,3 +6,5 @@
 stan100knocks.Rproj
 
 *.rds
+
+kick/kick_survival_analysis_hazard_car_model.R
