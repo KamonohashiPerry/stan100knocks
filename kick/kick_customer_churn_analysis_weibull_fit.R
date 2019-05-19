@@ -8,10 +8,10 @@ options(mc.cores = parallel::detectCores())
 # Data Import -------------------------------------------------------------
 dataset <- read_csv("dataset/WA_Fn-UseC_-Telco-Customer-Churn.csv")
 dataset$Churn <- as.factor(dataset$Churn)
-dataset$censored <- if_else(dataset$Churn == "Yes", 1, 0)
+dataset$censored <- if_else(dataset$Churn == "Yes", 0, 1)
 
-dataset_cens <- sample_n(dataset %>% filter(censored == 1), 300)
-dataset_obs <- sample_n(dataset %>% filter(censored == 0), 75)
+dataset_obs <- sample_n(dataset %>% filter(censored == 0), 300)
+dataset_cens <- sample_n(dataset %>% filter(censored == 1), 75)
 
 dataset <- rbind(dataset_cens, dataset_obs)
 
@@ -21,19 +21,19 @@ load(file = "customer_churn_dataset.RData")
 # Kick Stan Code ----------------------------------------------------------
 stan_data <- list(
                 ## 離脱のイベントが計測された顧客
-                Nobs = sum(dataset$censored == 1),
+                Nobs = sum(dataset$censored == 0),
                 ## 途中で打ち切られた顧客
-                Ncen = sum(dataset$censored == 0),
+                Ncen = sum(dataset$censored == 1),
                 ## 共変量の数
                 M_bg = 1,
                 ## 離脱イベントが計測された顧客の契約期間
-                yobs = dataset$tenure[dataset$censored == 1],
+                yobs = dataset$tenure[dataset$censored == 0],
                 ## 途中で打ち切られた顧客の契約期間
-                ycen = dataset$tenure[dataset$censored == 0],
+                ycen = dataset$tenure[dataset$censored == 1],
                 ## 離脱のイベントが計測された顧客の共変量
-                Xobs_bg = matrix(as.numeric(dataset$PaperlessBilling == "Yes")[dataset$censored == 1]),
+                Xobs_bg = matrix(as.numeric(dataset$PaperlessBilling == "Yes")[dataset$censored == 0]),
                 ## 途中で打ち切られた顧客の共変量
-                Xcen_bg = matrix(as.numeric(dataset$PaperlessBilling == "Yes")[dataset$censored == 0])
+                Xcen_bg = matrix(as.numeric(dataset$PaperlessBilling == "Yes")[dataset$censored == 1])
               )
 
 
@@ -46,7 +46,8 @@ fit <- rstan::stan(file = "model/weibull_fit.stan",
                    )
 
 
-save(fit, file = "kick/fit_customer_churn.RData")
+# save(fit, file = "kick/fit_customer_churn.RData")
+load(file = "kick/fit_customer_churn.RData")
 
 # diagnose ----------------------------------------------------------------
 
