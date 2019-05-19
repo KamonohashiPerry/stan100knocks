@@ -8,3 +8,7 @@ stan100knocks.Rproj
 *.rds
 
 kick/kick_survival_analysis_hazard_car_model.R
+
+customer_churn_dataset.RData
+
+kick/fit_customer_churn.RData
