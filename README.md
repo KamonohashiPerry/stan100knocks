@@ -33,3 +33,6 @@ https://qiita.com/fred55/items/52a3ce36906805645e05
 http://ajhjhaf.hatenablog.com/entry/2017/08/05/194939  
 http://statmodeling.hatenablog.com/entry/survival-analysis-hazard-car-model  
 https://www.bananarian.net/entry/2019/02/17/090000
+
+### WAICについて
+https://www.slideshare.net/simizu706/waic
