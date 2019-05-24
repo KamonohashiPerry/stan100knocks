@@ -16,6 +16,8 @@ https://github.com/sinhrks/stan-statespace
 http://statmodeling.hatenablog.com/entry/state-space-model-many-terms  
 https://logics-of-blue.com/multivariate-time-series-with-stan/  
 https://jrnold.github.io/bugs-examples-in-stan/index.html  
+https://mc-stan.org/docs/2_19/functions-reference/index.html
+
 
 ### 価格弾力性
 https://github.com/stan-dev/stancon_talks/blob/master/2018-helsinki/Contributed-Talks/braylan/Self-tuning_Holidays-presented.ipynb  
