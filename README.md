@@ -38,3 +38,37 @@ https://www.bananarian.net/entry/2019/02/17/090000
 
 ### WAICについて
 https://www.slideshare.net/simizu706/waic
+
+
+### 分布について
++ ベルヌーイ分布（y ~ bernoulli(theta)）
++ 正規分布（y ~ normal(mu, sigma)）
++ 歪正規分布（y ~ skew_normal(xi, omega, alpha)）
++ t分布（y ~ student_t(nu, mu, sigma)）
++ コーシー分布（y ~ cauchy(mu, sigma)）
++ ラプラス分布/二重指数分布（y ~ double_exponential(mu, sigma)）
++ ロジスティック分布（y ~ logistic(mu, sigma)）
++ ガンベル分布（y ~ gumbel(mu, beta)）
++ 対数正規分布（y ~ lognormal(mu, sigma)）
++ カイ二乗分布（y ~ chi_square(nu)）
++ 逆カイ二乗分布（y ~ inv_chi_square(nu)）
++ スケール化逆カイ二乗分布（y ~ scaled_inv_chi_square(nu, sigma)）
++ 指数分布（y ~ exponential(beta)）
++ ガンマ分布（y ~ gamma(alpha, beta)）
++ 逆ガンマ分布（y ~ inv_gamma(alpha, beta)）
++ ワイブル分布（y ~ weibull(alpha, sigma)）
++ フレシェ分布（y ~ frechet(alpha, sigma)）
++ レイリー分布（y ~ rayleigh(sigma)）
++ ウィーナー初到達時間分布（y ~ wiener(alpha, tau, beta, delta)）
++ パレート分布（y ~ pareto(y_min, alpha)）
++ パレート2型分布（y ~ pareto_type_2(mu, lambda, alpha)）
++ ベータ分布（theta ~ beta(alpha, beta)）
++ ベータ比例分布（theta ~ beta_proportion(mu, kappa)）
++ フォン・ミーゼス分布（y ~ von_mises(mu, kappa)）
++ 一様分布（y ~ uniform(alpha, beta)）
++ 多変量正規分布（y ~ multi_normal(mu, Sigma)）
++ 多変量t分布（y ~ multi_student_t(nu, mu, Sigma)）
++ ディリクレ分布（theta ~ dirichlet(alpha)）
++ LKJ相関分布（y ~ lkj_corr(eta)）
++ ウィシャート分布（W ~ wishart(nu, Sigma)）
++ 逆ウィシャート（W ~ inv_wishart(nu, Sigma)）
