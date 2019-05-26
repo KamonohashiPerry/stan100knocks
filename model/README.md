@@ -13,7 +13,7 @@ https://discourse.mc-stan.org/t/initialization-between-2-2-failed-after-100-atte
 ベータ分布/一様分布：確率や比率  
 
 ## 収束判断
-+ Rhatが全て1.05以下
++ Rhat（収束判定指標）が全て1.05以下
 + チェインごとのカーネル密度がきれいに重なっているか（重なっていなかったらダメ）  
 stan_dens(fit1,pars="p",separate_chains = TRUE)
 + サンプリングの自己相関が残っていないか（残っていたらダメ）  
@@ -43,7 +43,7 @@ mean(p)
 ## 用語
 + target += f  
 対数確率を加算する
-+ lp__
++ lp__  
 log posteriorの略。Stanでは推定したいパラメータの偏微分に従ってサンプリングするため、定数項は考慮されていない。
 + ~(チルダ)  
 その分布に従うという意味。
