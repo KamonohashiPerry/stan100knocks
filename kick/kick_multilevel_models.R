@@ -6,6 +6,9 @@ library(shinystan)
 library(loo)
 library(dplyr)
 library(tidyr)
+library(skimr)
+library(ggplot2)
+library(ggthemes)
 
 
 # Import Data -------------------------------------------------------------
@@ -79,3 +82,22 @@ ggplot(dataset) +
   annotate('text', x = 16+8, y = 0, label = 'Medium tanks', hjust = 0.5) +
   annotate('text', x = 32+8, y = 0, label = 'Large tanks', hjust = 0.5) +
   labs(x = 'Tank', y = 'Proportion survived')
+
+
+# log-odds survice
+for(i in 1:100){
+  graphics::curve(dnorm(x, post12_2$alpha[i], post12_2$sigma[i]), 
+                  add = T, 
+                  col = alpha('black', .2), 
+                  xlim = c(-3, 4), 
+                  ylim = c(0, .35), 
+                  xlab = 'log-odds survival', 
+                  ylab = 'Density')
+}
+
+# probability survive
+sim_tanks <- rnorm(8000, post12_2$alpha, post12_2$sigma) %>% plogis
+ggplot() + 
+  geom_density(aes(sim_tanks), fill = 'skyblue') +
+  labs(x = "Probability survival", y = "Density")
+
