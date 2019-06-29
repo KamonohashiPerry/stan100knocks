@@ -6,10 +6,13 @@
 
 kickにはstanを実行するためのRファイルを、datasetには実行するためのデータセットを、modelにはstanファイルを置いています。
 
+## 必須ドキュメント
++ Stan Functions Reference  
+分布に応じた関数は何か探す際はこちら（検索も可能）  
+https://mc-stan.org/docs/2_19/functions-reference/index.html
 
 ## 参考情報
 https://mc-stan.org/docs/2_19/reference-manual/index.html  
-https://mc-stan.org/docs/2_19/functions-reference/index.html
 https://mc-stan.org/docs/2_19/stan-users-guide/index.html  
 https://jrnold.github.io/ssmodels-in-stan/  
 https://github.com/MatsuuraKentaro/RStanBook  
