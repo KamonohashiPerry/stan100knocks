@@ -120,6 +120,7 @@ for (i in 1:n_fold){
   cv_mean_auc <- append(cv_mean_auc, auc)
 }
 
+cv_mean_auc
 mean(cv_mean_auc)
 
 
