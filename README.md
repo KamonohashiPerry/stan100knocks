@@ -23,6 +23,7 @@ https://logics-of-blue.com/multivariate-time-series-with-stan/
 https://jrnold.github.io/bugs-examples-in-stan/index.html  
 https://mc-stan.org/users/documentation/case-studies.html  
 https://mc-stan.org/users/documentation/tutorials.html  
+https://github.com/avehtari/BDA_R_demos  
 
 
 ### 価格弾力性
