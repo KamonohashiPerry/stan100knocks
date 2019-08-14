@@ -97,13 +97,20 @@ stan_kfold <- function(file, list_of_datas, chains, cores,...){
 
 # Kick the stan code ------------------------------------------------------
 # run the functions
-ss <- stan_kfold(file="model/logistic_regression_allowing_k_fold_cross_validation.stan",
+ss <- stan_kfold(file="model/logistic_regression_allowing_k_fold_cross_validation_hierachical.stan",
+                 data_l,
+                 chains=4,
+                 cores=2)
+
+ss_normal <- stan_kfold(file="model/logistic_regression_allowing_k_fold_cross_validation.stan",
                  data_l,
                  chains=4,
                  cores=2)
 
 
 # Calculate Mean AUC ------------------------------------------------------
+## hierachical model
+set.seed(123)
 cv_mean_auc <- NULL
 for (i in 1:n_fold){
   ext_fit <- extract(ss[[i]]) # choose 1 chunk
@@ -122,6 +129,28 @@ for (i in 1:n_fold){
 
 cv_mean_auc
 mean(cv_mean_auc)
+
+
+## no hierachical model
+set.seed(123)
+cv_mean_auc_normal <- NULL
+for (i in 1:n_fold){
+  ext_fit <- extract(ss_normal[[i]]) # choose 1 chunk
+  coef_fit_1 <- mean(ext_fit$alpha)
+  coef_fit_2 <- colMeans(ext_fit$beta)
+  
+  lin_comb <- data_l[[i]]$X[data_l[[i]]$holdout > 0, ] %*% coef_fit_2 
+  + replicate(sum(data_l[[i]]$holdout), 1) * coef_fit_1
+  prob <- 1/(1 + exp(-lin_comb))
+  pred_value <- rbinom(sum(data_l[[i]]$holdout), 1, prob)
+  
+  # Syntax (response, predictor):
+  auc = pROC::auc(data_l[[i]]$y[data_l[[i]]$holdout > 0], pred_value)[1]
+  cv_mean_auc_normal <- append(cv_mean_auc_normal, auc)
+}
+
+cv_mean_auc_normal
+mean(cv_mean_auc_normal)
 
 
 # Prediction --------------------------------------------------------------

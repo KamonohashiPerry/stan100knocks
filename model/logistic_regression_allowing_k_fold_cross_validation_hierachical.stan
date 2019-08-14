@@ -1,14 +1,16 @@
 data {
-    int<lower=0> N; // the number of rats
-    int<lower=0> T; // the number of time points
-    real x[T]; // day at which measurement was taken
-    real y[N,T]; // matrix of weight times time
-    real xbar; // the median number of days in the time series
+  int<lower=0> N;   // number of data items
+  int<lower=0> K;   // number of predictors
+  matrix[N, K] X;
+  int<lower=0,upper=1> y[N];
+  
+  int<lower=0, upper=1> holdout[N];
+  // index whether the observation should be held out (1) or used (0)
 }
-parameters {
-  real alpha[N]; // the intercepts of rat weights
-  real beta[N]; // the slopes of rat weights
 
+parameters {
+  real alpha;
+  vector[K] beta;       // coefficients for predictors
   real mu_alpha; // the mean intercept
   real mu_beta; // the mean slope
 
@@ -16,30 +18,32 @@ parameters {
   real<lower=0> sigmasq_alpha;
   real<lower=0> sigmasq_beta;
 }
+
 transformed parameters {
-  real<lower=0> sigma_y; // sd of rat weight
   real<lower=0> sigma_alpha; // sd of intercept distribution
   real<lower=0> sigma_beta; // sd of slope distribution
 
-  sigma_y = sqrt(sigmasq_y);
   sigma_alpha = sqrt(sigmasq_alpha);
   sigma_beta = sqrt(sigmasq_beta);
 }
+
 model {
+  vector[N] mu; // the linear predictor
+  mu = X * beta; // the regresion
+  // priors
   mu_alpha ~ normal(0, 100); // non-informative prior
   mu_beta ~ normal(0, 100); // non-informative prior
   sigmasq_y ~ inv_gamma(0.001, 0.001); // conjugate prior of normal
   sigmasq_alpha ~ inv_gamma(0.001, 0.001); // conjugate prior of normal
   sigmasq_beta ~ inv_gamma(0.001, 0.001); // conjugate prior of normal
   alpha ~ normal(mu_alpha, sigma_alpha); // all intercepts are normal 
-  beta ~ normal(mu_beta, sigma_beta);  // all slopes are normal
-  for (n in 1:N) // for each sample
-    for (t in 1:T)  // for each time point
-      y[n,t] ~ normal(alpha[n] + beta[n] * (x[t] - xbar), sigma_y);
+  
+  beta[1:K] ~ normal(mu_beta, sigma_beta);
 
-}
-generated quantities {
-  // determine the intercept at time 0 (birth weight)
-  real alpha0;
-  alpha0 = mu_alpha - xbar * mu_beta;
+  // likelihood holding out some data
+  for(n in 1:N){
+    if(holdout[n] == 0){
+      target += bernoulli_lpmf( y[n] | inv_logit(alpha + mu[n]));
+    }
+  }
 }
