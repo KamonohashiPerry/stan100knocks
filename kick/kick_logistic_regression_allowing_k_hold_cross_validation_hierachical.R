@@ -21,7 +21,7 @@ wine_dataset <- wine_dataset %>% select(-citric.acid)
 
 
 # Split Train and Test ----------------------------------------------------
-## 75% of the sample size
+## 80% of the sample size
 smp_size <- floor(0.8 * nrow(wine_dataset))
 
 ## set the seed to make your partition reproducible
